@@ -96,4 +96,4 @@ after_success:
     - chmod 600 ./deploy_key
     - echo -e "Host $STAGING_SERVER\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
     - ssh -i ./deploy_key root@$STAGING_SERVER
-    - pwd
+    - sh deployer.sh 
