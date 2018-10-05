@@ -9,7 +9,7 @@ addons:
   chrome: stable
   firefox: latest
 env:
-    - EMONCMS_REPO="https://github.com/emoncms/emoncms.git" EMONCMS_BRANCH="stable" MHEP_REPO="https://github.com/cagabi/MyHomeEnergyPlanner" MHEP_BRANCH="CI" STAGING_SERVER="http://myhome.default.carboncoop.uk0.bigv.io"
+    - EMONCMS_REPO="https://github.com/emoncms/emoncms.git" EMONCMS_BRANCH="stable" STAGING_SERVER="http://myhome.default.carboncoop.uk0.bigv.io"
 before_install:
     # Install Apache + PHP - adapted from https://docs.travis-ci.com/user/languages/php/
     - sudo apt-get update
@@ -29,10 +29,10 @@ install:
     # Install emonCMS - adapted from https://github.com/emoncms/emoncms/blob/master/docs/LinuxInstall.md
     ## Setup in apache
     - sudo apt-get install php-pear redis-server build-essential php5-dev g++ wget -y
-    #- sudo pear channel-discover pear.swiftmailer.org
-    #- printf "\n" | sudo pecl install swift/swift redis
-    #- printf "extension=redis.so" | sudo tee /etc/php5/mods-available/redis.ini 1>&2
-    #- sudo php5enmod redis
+    - sudo pear channel-discover pear.swiftmailer.org
+    - printf "\n" | sudo pecl install swift/swift redis
+    - printf "extension=redis.so" | sudo tee /etc/php5/mods-available/redis.ini 1>&2
+    - sudo php5enmod redis
     - sudo cp ./travis-CI/emoncms.conf /etc/apache2/sites-available/emoncms.conf
     - sudo a2ensite emoncms
     - sudo service apache2 reload
@@ -57,7 +57,7 @@ install:
     - sed -i 's/_DB_USER_/travis/g' settings.php
     - sed -i 's/_DB_PASSWORD_//g' settings.php
     - sed -i 's/$enable_multi_user = false;/$enable_multi_user = true;/g' settings.php
-    ### Not setting up SMTP    
+    ### Not setting up SMTP - needs to be done if we want to test emails features
     ## Install MHEP theme
     - cd /var/www/html/emoncms/Theme
     - git clone --depth=50 https://github.com/carboncoop/MHEP_theme.git CCoop
@@ -65,7 +65,7 @@ install:
     - sed -i 's/$theme = "basic";/$theme = "CCoop";/g' settings.php
     ## Install MHEP
     - cd /var/www/html/emoncms/Modules
-    - git clone --depth=50 --branch=$MHEP_BRANCH $MHEP_REPO assessment
+    - git clone --depth=50 --branch=$TRAVIS_BRANCH https://github.com/$TRAVIS_REPO_SLUG assessment
     - cd assessment
     - git submodule update --init --recursive
     ## Setup test suite
