@@ -9,8 +9,9 @@ addons:
   chrome: stable
   firefox: latest
 env:
-    - EMONCMS_REPO="https://github.com/emoncms/emoncms.git" EMONCMS_BRANCH="stable"
-    - secure: "M1RwV/RbAfRvv2s6vQlEGVYYV00CGLQ4xQ6eObIOp7dgrUwguRh0f5mJCC60BR5eFCgOE7YZSL+4rps0v8GPbO+/UPUrOzBST3mTbD05deXElQmFy6nNsvWjIxlIVLwSgwsOuMo9pCE6mu8VvLetj7SsRw/yipY3W8ibH9Xc4/A9aUeU8N71Skd5VCrqsshKZjLWkye2Cwgk5UAVGltsdPxKDu1kEGMBhLU4AgKw7KWhB3HwcxOVb74GZ7BHzM92Q94/Dm+26SecRqQ07x1WTSyUbzu+2iFmbGAQhyOFBm+/Jzw0fnqRqXpQZH5a6+ElhaTGYQSkA3k5ER2NQlx3Wnopr38fVj9IUCraMXgIp/7t+JoN2JkdQFCJdXHR+gnGhp+lLPz2sT3pfmpcYDNIxGxoSlix/7a8dYxnk+iOpgAQbR/JQQp4CmB9WbFPavar8m9YtkvGsKvKbivG1eXS2Y3hFOam3+Wzii5qw73VJXDbjylSABLnjYk+TDk0O0kowv9kaHMq1p0n8FuL47BLEgcZuW7FICLEZ+zQ+e9LWLxHAIK0QgqQFB02rP/YOUQCq8MvEpGHQhesn9WnMUBGE7CDCfGlCYbxMEhBKhsOfylwQs3G4BdXW5ZeMPCJRP1fmp9K5U1GnDx2H2k6hYwaNNYShbk6YT0GTtqmNPCDdHs="
+    global
+        - EMONCMS_REPO="https://github.com/emoncms/emoncms.git" 
+        - EMONCMS_BRANCH="stable"
 before_install:
     # Install Apache + PHP - adapted from https://docs.travis-ci.com/user/languages/php/
     - sudo apt-get update
@@ -96,5 +97,5 @@ after_success:
     - eval "$(ssh-agent -s)"
     - chmod 600 ./deploy_key
     - echo -e "Host $PRODUCTION_SERVER\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-    - ssh -i ./deploy_key deploy@$PRODUCTION_SERVER
+    - ssh -i ./deploy_key $PRODUCTION_SERVER_USER@$PRODUCTION_SERVER
     - sh deployer.sh 
