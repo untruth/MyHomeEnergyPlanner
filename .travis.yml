@@ -91,6 +91,6 @@ script:
     - HEADLESS=true DEBUG=true TRAVIS=true ./node_modules/.bin/wdio wdio.conf.js
 deploy:
     provider: script
-    script: bash travis-CI/deploy.sh
+    script: sh /var/www/html/emoncms/Modules/assessment/travis-CI/deploy.sh
     on:
         branch: deploy
