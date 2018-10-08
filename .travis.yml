@@ -90,6 +90,7 @@ script:
     - HEADLESS=true ./node_modules/.bin/wdio wdio.conf.js --spec travis_specs/emonCMS-setup.js
     - HEADLESS=true DEBUG=true TRAVIS=true ./node_modules/.bin/wdio wdio.conf.js
 deploy:
+    skip_cleanup: true
     provider: script
     script: sh /var/www/html/emoncms/Modules/assessment/travis-CI/deploy.sh
     on:
