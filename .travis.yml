@@ -57,7 +57,7 @@ install:
     
     ## Install MHEP theme
     - cd /var/www/html/emoncms/Theme
-    - git clone --depth=3 https://github.com/carboncoop/MHEP_theme.git CCoop
+    - git clone --depth=50 https://github.com/carboncoop/MHEP_theme.git CCoop
     - cd /var/www/html/emoncms/
     - sed -i 's/$theme = "basic";/$theme = "CCoop";/g' settings.php
     
@@ -69,8 +69,8 @@ install:
     
     ## Install reports
     - cd /var/www/html/emoncms/Modules/assessment/reports
-    - git clone --depth=3 https://github.com/carboncoop/carboncoopreport carboncoop
-    - git clone --depth=3 https://github.com/carboncoop/carboncoopreport cumbriaactionforsustainability
+    - git clone https://github.com/carboncoop/carboncoopreport carboncoop
+    - git clone https://github.com/carboncoop/carboncoopreport cumbriaactionforsustainability
     - cd cumbriaactionforsustainability
     - git checkout cafs
         
