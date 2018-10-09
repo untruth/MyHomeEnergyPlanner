@@ -93,4 +93,4 @@ deploy:
     provider: script
     script: sh /var/www/html/emoncms/Modules/assessment/travis-CI/deploy.sh
     on:
-        branch: deploy
+        branch: production
