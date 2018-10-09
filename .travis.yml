@@ -63,7 +63,7 @@ install:
     
     ## Install MHEP - we copy travis build instead of cloning $TRAVIS_BRANCH, this is to ensure that in a PR we are testing the result of the merge and not the target branch only (https://docs.travis-ci.com/user/environment-variables/#default-environment-variables)
     - cd /var/www/html/emoncms/Modules
-    - cp $TRAVIS_BUILD_DIR assessment
+    - cp -r $TRAVIS_BUILD_DIR assessment
     - cd assessment
     - git submodule update --init --recursive
     
