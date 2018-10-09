@@ -67,6 +67,13 @@ install:
     - cd assessment
     - git submodule update --init --recursive
     
+    ## Install reports
+    - cd /var/www/html/emoncms/Modules/assessment/reports
+    - git clone --depth=3 https://github.com/carboncoop/carboncoopreport carboncoop
+    - git clone --depth=3 https://github.com/carboncoop/carboncoopreport cumbriaactionforsustainability
+    - cd cumbriaactionforsustainability
+    - git checkout cafs
+        
     ## Setup test suite
     - cd /var/www/html/emoncms/Modules/assessment/tests
     - npm install
