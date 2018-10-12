@@ -55,19 +55,19 @@ install:
     - sed -i 's/$enable_multi_user = false;/$enable_multi_user = true;/g' settings.php
         ### Not setting up SMTP - needs to be done if we want to test emails features
     
-    ## Install MHEP theme
+    # Install MHEP theme
     - cd /var/www/html/emoncms/Theme
-    - git clone --depth=50 https://github.com/carboncoop/MHEP_theme.git CCoop
+    - git clone --depth=3 https://github.com/carboncoop/MHEP_theme.git CCoop
     - cd /var/www/html/emoncms/
     - sed -i 's/$theme = "basic";/$theme = "CCoop";/g' settings.php
-    
-    ## Install MHEP - we copy travis build instead of cloning $TRAVIS_BRANCH, this is to ensure that in a PR we are testing the result of the merge and not the target branch only (https://docs.travis-ci.com/user/environment-variables/#default-environment-variables)
+
+    # Install MHEP - we copy travis build instead of cloning $TRAVIS_BRANCH, this is to ensure that in a PR we are testing the result of the merge and not the target branch only (https://docs.travis-ci.com/user/environment-variables/#default-environment-variables)
     - cd /var/www/html/emoncms/Modules
     - cp -r $TRAVIS_BUILD_DIR assessment
     - cd assessment
     - git submodule update --init --recursive
     
-    ## Install reports
+    # Install reports
     - cd /var/www/html/emoncms/Modules/assessment/reports
     - git clone https://github.com/carboncoop/carboncoopreport carboncoop
     - git clone https://github.com/carboncoop/carboncoopreport cumbriaactionforsustainability
@@ -92,7 +92,9 @@ install:
 script:
     #- curl -vL http://127.0.0.1/emoncms
     - cd /var/www/html/emoncms/Modules/assessment/tests
+    # Create emonCMS admin user and run basic test
     - HEADLESS=true ./node_modules/.bin/wdio wdio.conf.js --spec travis_specs/emonCMS-setup.js
+    # Run MHEP tests
     - HEADLESS=true DEBUG=true TRAVIS=true ./node_modules/.bin/wdio wdio.conf.js
     
 deploy:
