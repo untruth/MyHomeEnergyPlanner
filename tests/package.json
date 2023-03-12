@@ -16,6 +16,6 @@
     "webdriverio": "^4.13.2"
   },
   "dependencies": {
-    "fibers": "^4.0.1"
+    "fibers": "^4.0.2"
   }
 }
